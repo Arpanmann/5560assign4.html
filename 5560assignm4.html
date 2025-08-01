@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Race Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            text-align: center;
+        }
+        #raceTrack {
+            width: 80%;
+            height: 300px;
+            margin: 30px auto;
+            border: 4px solid #000;
+            background: #fff;
+            position: relative;
+        }
+        .runner {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        #horse { top: 20px; }
+        #tiger { top: 120px; }
+        #myPhoto { top: 220px; }
+        #finishLine {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 100%;
+            background: red;
+        }
+        #runBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #runBtn:hover { background: darkgreen; }
+        #message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Race Game</h1>
+    <div id="raceTrack">
+        <!-- Horse image -->
+        <img id="horse" class="runner" src="https://wildjolie.com/cdn/shop/articles/16_Most_Beautiful_Horse_in_the_World.jpg?v=1740021416" alt="Horse">
+        <!-- Tiger image -->
+        <img id="tiger" class="runner" src="https://transforms.stlzoo.org/production/animals/amur-tiger-01-01.jpg?w=1200&h=1200&auto=compress%2Cformat&fit=crop&dm=1658935145&s=95d03aceddd44dc8271beed46eae30bc" alt="Tiger">
+        <!-- Your photo -->
+        <img id="myPhoto" class="runner" src="https://m.media-amazon.com/images/I/713qpvjzsYL.png" alt="You">
+        <div id="finishLine"></div>
+    </div>
+
+    <button id="runBtn">Run!</button>
+    <div id="message"></div>
+
+<script>
+$(document).ready(function(){
+    $("#runBtn").click(function(){
+        $("#message").text(""); // Clear message
+
+        // Random speeds for each racer
+        var horseSpeed = Math.floor(Math.random() * 3000) + 2000;
+        var tigerSpeed = Math.floor(Math.random() * 3000) + 2000;
+        var mySpeed = Math.floor(Math.random() * 3000) + 2000;
+
+        // Animate racers
+        $("#horse").animate({ left: '80%' }, horseSpeed, function(){ checkWinner(this.id); });
+        $("#tiger").animate({ left: '80%' }, tigerSpeed, function(){ checkWinner(this.id); });
+        $("#myPhoto").animate({ left: '80%' }, mySpeed, function(){ checkWinner(this.id); });
+
+        var finished = [];
+
+        function checkWinner(id){
+            finished.push(id);
+            if(finished.length === 3){
+                if(finished[0] === "myPhoto"){
+                    $("#message").css("color","green").text("You Win! 🎉");
+                } else {
+                    $("#message").css("color","red").text("You Lose! 😢");
+                }
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
